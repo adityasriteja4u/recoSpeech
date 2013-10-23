@@ -1,0 +1,5 @@
+#JSGF V1.0;
+grammar control;
+<action> = (stop | reverse);
+<greeting> = (hello) ;
+public <command> = <greeting> | <action> | (right) | (move forward) | (go left);
