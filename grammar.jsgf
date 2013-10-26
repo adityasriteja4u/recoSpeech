@@ -1,5 +1,15 @@
 #JSGF V1.0;
 grammar control;
-<action> = (stop | reverse);
-<greeting> = (hello) ;
-public <command> = <greeting> | <action> | (right) | (move forward) | (go left);
+
+/* we would like to be polite to our
+ * near and dear Roger.
+ */
+<sugar> = (please | kindly | oh mighty roger)*;
+
+/* optional ends
+ */
+
+<end> = [now | there];
+<action> =  (stop | go back);
+<direction> = left | right;
+public <command> = <sugar> (<action> | turn <direction> | move forward);

@@ -1,7 +1,9 @@
+/* modified  pocketsphinx continuous example
+ */
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-
+#include <ctype.h>
 #include <signal.h>
 #include <setjmp.h>
 #include <sys/types.h>
@@ -23,40 +25,34 @@ sleep_msec(int32 ms)
 
 }
 
+
 void send_to_mbed(char const *hyp) { 
 	int length = 20;
-	if (!strcmp(hyp, "go left")) 
-		for (int i = 0; i < length; ++i) {
-			printf("%s", "l");
-			sleep_msec(10);
-		}
-	else if (!strcmp(hyp, "right")) 
-		for (int i = 0; i < length; ++i) {
-			printf("%s", "r");
-			sleep_msec(10);
-		}
+	char toSend[2];
+	if (!strcmp(hyp, "turn left")) 
+		strcpy(toSend, "l");
+	else if (!strcmp(hyp, "turn right")) 
+		strcpy(toSend, "r");
 	else if (!strcmp(hyp, "stop"))
-		for (int i = 0; i < length; ++i) {
-			printf("%s", "s");
-			sleep_msec(10);
-		}
+		strcpy(toSend, "s");
 	else if (!strcmp(hyp, "move forward"))
-		for (int i = 0; i < length; ++i) {
-			printf("%s", "m");
-			sleep_msec(10);
-		}
-	else if (!strcmp(hyp, "reverse"))
-		for (int i = 0; i < length; ++i) {
-			printf("%s", "b");
-			sleep_msec(10);
-		}
+		strcpy(toSend, "m");
+	else if (!strcmp(hyp, "go back"))
+		strcpy(toSend, "b");
 	else if (!strcmp(hyp, "hello roger"))
-		for (int i = 0; i < length; ++i) {
-			printf("%s", "d");
-			sleep_msec(10);
-		}
+		strcpy(toSend, "h");
+
+	#ifdef CAPSMODE
+	toSend[0] = toupper(toSend[0]);
+	#endif
+
+	for (int i = 0; i < length; ++i) {
+		printf("%s", toSend);
+		sleep_msec(10);
+	}
 	fflush(stdout);
 }
+
 
 static const arg_t cont_args_def[] = {
     POCKETSPHINX_OPTIONS,
@@ -215,6 +211,7 @@ recognize_from_microphone()
         ps_end_utt(ps);
         hyp = ps_get_hyp(ps, &confidence, &uttid);
         fprintf(stderr,"%s\n",hyp);
+		//fprintf(stderr, "probability :%d\n", ps_get_prob());
 
 		send_to_mbed(hyp);
 
