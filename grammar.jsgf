@@ -4,12 +4,12 @@ grammar control;
 /* we would like to be polite to our
  * near and dear Roger.
  */
-<sugar> = (please | kindly | oh mighty roger)*;
+//<sugar> = (please | kindly | oh mighty roger)*;
 
 /* optional ends
  */
-
 <end> = [now | there];
+
 <action> =  (stop | go back);
 <direction> = left | right;
-public <command> = <sugar> (<action> | turn <direction> | move forward);
+public <command> = (<action> | turn <direction> | move forward);

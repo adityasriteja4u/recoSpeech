@@ -29,7 +29,9 @@ sleep_msec(int32 ms)
 void send_to_mbed(char const *hyp) { 
 	int length = 20;
 	char toSend[2];
-	if (!strcmp(hyp, "turn left")) 
+	if (!strcmp(hyp, "turn left") || !strcmp(hyp, "oh mighty roger turn left") ||
+				!strcmp(hyp, "oh mighty roger please turn left") || 
+				!strcmp(hyp, "please turn left") || !strcmp(hyp, "kindly turn left")) 
 		strcpy(toSend, "l");
 	else if (!strcmp(hyp, "turn right")) 
 		strcpy(toSend, "r");

@@ -9,8 +9,8 @@ HMMDIR=$1
 GRAMMAR="./grammar.jsgf"
 
 ./roger -hmm $HMMDIR -jsgf $GRAMMAR \
-		-pl_window 10\    # optimizations
-		-kdmaxxbbi 16\    # optimizations 
-		-kdmaxdepth 10\   # optimizations
-		-ds 2\            # optimizations
+		-pl_window 10\
+		-kdmaxxbbi 16\
+		-kdmaxdepth 10\
+		-ds 2\
 		>$2
